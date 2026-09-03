@@ -1,0 +1,17 @@
+{
+  "name": "alfavox-playwright-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright smoke and regression tests for AlfaVox web workflows",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:smoke": "playwright test tests/smoke",
+    "test:report": "playwright show-report",
+    "lint": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "typescript": "^5.6.3"
+  }
+}
