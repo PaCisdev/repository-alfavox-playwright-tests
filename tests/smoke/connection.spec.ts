@@ -11,8 +11,8 @@ test('users can connect', async ({ page, Agent1, Agent2,  }) => {
     const page2 = await loginPage2.open();
 
     //action
-    await page1.loginPage1(Agent1);
-    await page2.loginPage1(Agent2);
+    await page1.login1(Agent1);
+    await page2.login2(Agent2);
 
     await page1.availableAction();
     
@@ -20,13 +20,34 @@ test('users can connect', async ({ page, Agent1, Agent2,  }) => {
     await page2.toggleAction();
     await page1.acceptAction();
     
-await page2.availableAction();
-await page2.toggleAction();
-await page2.acceptAction();
+    await page2.availableAction();
+    await page2.toggleAction();
+    await page2.acceptAction();
 
     await page1.dialButtonAction();
     
-
     // verification
 
+});
+
+test('users can connect and disconnect', async ({ page, Agent1 }) => {
+    // preparation
+    const loginPage = new SystemPage(page);
+
+
+    //action
+    await page.loginPage(Agent1);
+    await page.availableAction();
+    await page.toggleAction();
+    await page.toggleAction();
+    await page.acceptAction();
+
+ 
+  
+    await page.moreOptionsButton.click();
+    await page.logoutButton.click();
+    await page.logoutConfirmButton.click();
+
+    // verification
+    await expect(page1
 });

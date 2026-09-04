@@ -1,10 +1,10 @@
 import { Locator, Page } from '@playwright/test';
 
 export class SystemPage  {
-  login2(Agent2: { username: string; password: string; }) {
+  login1(Agent1: { username: string; password: string; }) {
       throw new Error('Method not implemented.');
   }
-  loginPage1(Agent1: { username: string; password: string; }) {
+  login2(Agent2: { username: string; password: string; }) {
       throw new Error('Method not implemented.');
   }
   public readonly availableButton:Locator;
