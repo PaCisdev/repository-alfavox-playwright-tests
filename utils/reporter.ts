@@ -1,3 +1,5 @@
+import { Console } from 'console';
+
 export function formatTestName(name: string): string {
   return name.trim().replace(/\s+/g, ' ');
 }

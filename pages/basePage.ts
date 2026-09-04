@@ -26,6 +26,7 @@ export class BasePage {
   }
 
   async getText(selector: string): Promise<string> {
-    return this.page.locator(selector).textContent() ?? '';
+    const text = await this.page.locator(selector).textContent();
+    return text ?? '';
   }
 }

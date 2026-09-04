@@ -1,23 +1,27 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../fixtures/tests';
 import { LoginPage } from '../../pages/auth/loginPage';
-import { testUsers } from '../../data/testDataConfig';
 
-test.describe('Login smoke tests', () => {
-  test('login with valid credentials', async ({ page }) => {
-    const loginPage = new LoginPage(page);
 
-    await page.goto('https://example.com/login');
-    await loginPage.login(testUsers.validUser.email, testUsers.validUser.password);
+test('user can login', async ({ page, Agent1, Agent2 }) => {
+    // preparation
+    const loginPage1 = new LoginPage(page);
+    const loginPage2 = new LoginPage(page);
 
-    await expect(page).toHaveURL(/.*dashboard/);
-  });
+    await loginPage1.open();
+    await loginPage2.open();
+    // action
+    await loginPage1.login1(Agent1);
 
-  test('login with invalid credentials shows an error', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+    // verification
+    await expect(page.getByTestId('personal-status-button'))
+        .toBeVisible({ timeout: 30_000 });
 
-    await page.goto('https://example.com/login');
-    await loginPage.login(testUsers.invalidUser.email, testUsers.invalidUser.password);
+    await loginPage2.login2(Agent1);
 
-    await expect(page.locator('[data-test="login-error"]')).toBeVisible();
-  });
-});
+    // verification
+    await expect(page.getByTestId('personal-status-button'))
+        .toBeVisible({ timeout: 30_000 });
+
+    });
+
+

@@ -1,27 +1,30 @@
-import { Page } from '@playwright/test';
-import { BasePage } from '../basePage';
+import { Locator, Page } from '@playwright/test';
+import testUsers from '../../data/testUsers.json';
 
-export class LoginPage extends BasePage {
-  private readonly emailInput = 'input[name="email"]';
-  private readonly passwordInput = 'input[name="password"]';
-  private readonly loginButton = 'button:has-text("Login")';
-  private readonly errorMessage = '[data-test="login-error"]';
+export class LoginPage  {
+  public readonly emailInput:Locator;
+  public readonly passwordInput:Locator;
+  public readonly loginButton:Locator;
+  public readonly errorMessage:Locator;
 
-  constructor(page: Page) {
-    super(page);
+  constructor(private page: Page) {
+   this.emailInput = this.page.getByRole('textbox', { name: 'Użytkownik' })
+   this.passwordInput = this.page.getByRole('textbox', { name: 'Password' });
+   this.loginButton = this.page.getByRole('button', { name: 'Zaloguj' });
+   this.errorMessage = this.page.getByRole('alert');
   }
 
   async open(): Promise<void> {
-    await this.goto('/login');
+    await this.page.goto('https://webagent-uat-wa.alfavox.dev/ui/alfaworkspace');
   }
 
-  async login(email: string, password: string): Promise<void> {
-    await this.fill(this.emailInput, email);
-    await this.fill(this.passwordInput, password);
-    await this.click(this.loginButton);
+  async login(user = testUsers.login1): Promise<void> {
+    await this.emailInput.fill(user.username);
+    await this.passwordInput.fill(user.password);
+    await this.loginButton.click();
   }
 
   async getErrorMessage(): Promise<string> {
-    return this.getText(this.errorMessage);
+    return this.errorMessage.innerText();
   }
 }
