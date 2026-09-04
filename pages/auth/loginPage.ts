@@ -6,6 +6,7 @@ export class LoginPage  {
   public readonly passwordInput:Locator;
   public readonly loginButton:Locator;
   public readonly personalStatusButton:Locator;
+    loginPage1: any;
     
   constructor(private page: Page) {
    this.emailInput = this.page.getByRole('textbox', { name: 'Użytkownik' })
@@ -14,10 +15,11 @@ export class LoginPage  {
    this.personalStatusButton = this.page.getByTestId('personal-status-button');
   }
 
-  async open(): Promise<void> {
-    const context = await this.page.context();
-    await context.newPage();
-    await this.page.goto('https://webagent-uat-wa.alfavox.dev/ui/alfaworkspace');
+  async open(): Promise<LoginPage> {
+    const newPage = await this.page.context().newPage();
+    
+    await newPage.goto('https://webagent-uat-wa.alfavox.dev/ui/alfaworkspace');
+    return new LoginPage(newPage);
   }
 
 
